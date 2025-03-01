@@ -1,0 +1,115 @@
+<div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="card">
+          <!-- Header avec les informations de l'objet -->
+          <div class="card-header bg-white">
+            <div class="d-flex align-items-center gap-3">
+              <img src="/placeholder.svg" alt="Objet trouvé" class="rounded" width="48" height="48" />
+              <div class="flex-grow-1">
+                <h5 class="mb-1">Clés trouvées</h5>
+                <p class="mb-0 text-muted small">
+                  <i class="bi bi-geo-alt me-1"></i>
+                  Parc Central - 19/02/2024
+                </p>
+              </div>
+              <a [routerLink]="['/dashboard']" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-arrow-left me-2"></i>
+                Retour
+              </a>
+            </div>
+          </div>
+  
+          <!-- Zone des messages -->
+          <div class="card-body p-4" style="max-height: 500px; overflow-y: auto;">
+            <div class="d-flex flex-column gap-3">
+              <div *ngFor="let message of messages" 
+                   [class]="'d-flex ' + (message.isOwner ? 'justify-content-end' : 'justify-content-start')">
+                <div [class]="'d-flex gap-2 max-w-75 ' + (message.isOwner ? 'flex-row-reverse' : '')">
+                  <div class="flex-shrink-0">
+                    <div class="bg-secondary bg-opacity-10 rounded-circle p-2">
+                      <i class="bi bi-person"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div [class]="'rounded-3 p-3 ' + (message.isOwner ? 'bg-primary text-white' : 'bg-light')">
+                      <p class="mb-1">{{ message.content }}</p>
+                      <div [class]="'d-flex gap-2 align-items-center ' + (message.isOwner ? 'justify-content-end' : '')">
+                        <small [class]="message.isOwner ? 'text-white-50' : 'text-muted'">
+                          {{ message.timestamp }}
+                        </small>
+                        <i *ngIf="message.isOwner" 
+                           [class]="'bi bi-check2' + (message.read ? '-all' : '') + ' small'"></i>
+                      </div>
+                    </div>
+                    <div [class]="'mt-1 ' + (message.isOwner ? 'text-end' : '')">
+                      <small class="text-muted">{{ message.sender }}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Formulaire d'envoi de message -->
+          <div class="card-footer bg-white">
+            <form (ngSubmit)="handleSubmit($event)">
+              <div class="input-group">
+                <button type="button" class="btn btn-outline-secondary" title="Ajouter une pièce jointe">
+                  <i class="bi bi-paperclip"></i>
+                </button>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Écrivez votre message..."
+                  [(ngModel)]="newMessage"
+                  name="newMessage"
+                />
+                <button type="submit" class="btn btn-primary" [disabled]="!newMessage.trim()">
+                  <i class="bi bi-send me-2"></i>
+                  Envoyer
+                </button>
+              </div>
+              <div class="form-text mt-2">
+                <i class="bi bi-info-circle me-1"></i>
+                Soyez précis dans votre description pour faciliter l'identification de l'objet
+              </div>
+            </form>
+          </div>
+        </div>
+  
+        <!-- Informations sur le retrouveur -->
+        <div class="card mt-4">
+          <div class="card-body">
+            <h6 class="card-title mb-4">À propos du retrouveur</h6>
+            <div class="d-flex align-items-center">
+              <div class="border rounded-circle p-3 me-3">
+                <i class="bi bi-person h4 mb-0"></i>
+              </div>
+              <div>
+                <h6 class="mb-1">Jean Dupont</h6>
+                <div class="text-warning mb-2">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <span class="text-muted ms-2">4.5/5</span>
+                </div>
+                <p class="text-muted small mb-0">
+                  <i class="bi bi-calendar3 me-2"></i>
+                  Membre depuis janvier 2024
+                </p>
+              </div>
+              <div class="ms-auto">
+                <button class="btn btn-outline-danger btn-sm">
+                  <i class="bi bi-flag me-2"></i>
+                  Signaler
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

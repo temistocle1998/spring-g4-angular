@@ -1,0 +1,145 @@
+<main class="container py-4">
+    <div class="row g-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h1 class="h3 mb-0">Objets Trouvés</h1>
+            <button routerLink="/publishAnnonce" class="btn btn-primary">
+                <i class="bi bi-plus me-2"></i>
+                Publier une annonce
+            </button>
+        </div>
+
+        <div class="col-12">
+            <div class="row g-2">
+                <div class="col">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Rechercher un objet..." />
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-funnel me-2"></i>
+                        Filtres
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <ul class="nav nav-pills">
+                <li *ngFor="let category of categories" class="nav-item">
+                    <a class="nav-link {{ category === 'Tous' ? 'active' : '' }}">
+                        {{ category }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12">
+            <div class="row g-4">
+                <div *ngFor="let item of items" class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        <img [src]="item.image" class="card-img-top" [alt]="item.title" [style.height]="'200px'"
+                            [style.object-fit]="'cover'" />
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text text-muted small mb-2">
+                                <i class="bi bi-geo-alt me-1"></i>
+                                {{item.location}}
+                            </p>
+                            <p class="card-text">{{item.description}}</p>
+                        </div>
+                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{item.date}}</small>
+                            <button (click)="setSelectedItem(item)" class="btn btn-outline-primary btn-sm">Voir détails</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" [class.show]="showItem" [style.display]="showItem ? 'block' : 'none'" id="itemDetailsModal" tabindex="-1" aria-labelledby="itemDetailsModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ selectedItem?.title }}</h5>
+                    <button type="button" (click)="closeModal()" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <img
+                                [src]="selectedItem?.image || '/placeholder.svg'"
+                                alt="{{ selectedItem?.title }}"
+                                class="img-fluid rounded"
+                            />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">Informations de l'objet</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="bi bi-tag me-2"></i>
+                                        Catégorie : {{ selectedItem?.category }}
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-geo-alt me-2"></i>
+                                        Lieu : {{ selectedItem?.location }}
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-calendar me-2"></i>
+                                        Date : {{ selectedItem?.date }}
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-info-circle me-2"></i>
+                                        État : {{ selectedItem?.additionalDetails?.condition }}
+                                    </li>
+                                </ul>
+                            </div>
+    
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">Description</h6>
+                                <p>{{ selectedItem?.description }}</p>
+                            </div>
+    
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">Retrouveur</h6>
+                                <div class="d-flex align-items-center">
+                                    <div class="border rounded-circle p-2 me-3">
+                                        <i class="bi bi-person h4 mb-0"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0">{{ selectedItem?.finder?.name }}</p>
+                                        <div class="text-warning small">
+                                            <i class="bi bi-star-fill"></i>
+                                            <span class="text-muted ms-1">
+                                                {{ selectedItem?.finder?.rating }} · Membre depuis
+                                                {{ selectedItem?.finder?.joinDate }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" title="Signaler une annonce suspecte">
+                        <i class="bi bi-flag me-2"></i>
+                        Signaler
+                    </button>
+                    <button type="button" (click)="closeModal()" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Fermer
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="bi bi-chat me-2"></i>
+                        Contacter le retrouveur
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</main>

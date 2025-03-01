@@ -1,0 +1,69 @@
+<div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="card">
+          <div class="card-header bg-white">
+            <h4 class="card-title mb-0">Publier une annonce</h4>
+          </div>
+          <div class="card-body">
+            <form class="row g-4">
+              <div class="col-12">
+                <label class="form-label">Titre de l'annonce</label>
+                <input type="text" class="form-control" placeholder="Ex: Clés trouvées près de la gare" />
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Catégorie</label>
+                <select class="form-select">
+                  <option value="">Sélectionner une catégorie</option>
+                  <option value="keys">Clés</option>
+                  <option value="electronics">Électronique</option>
+                  <option value="accessories">Accessoires</option>
+                  <option value="documents">Documents</option>
+                  <option value="other">Autres</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Lieu de découverte</label>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-geo-alt"></i>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Adresse ou lieu" />
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  rows={4}
+                  placeholder="Décrivez l'objet trouvé (couleur, marque, état...)"
+                ></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Photos</label>
+                <div class="border rounded-3 p-4 text-center">
+                  <i class="bi bi-cloud-upload display-6 text-muted"></i>
+                  <p class="text-muted mt-2 mb-0">
+                    Glissez-déposez vos photos ici ou
+                    <button type="button" class="btn btn-link p-0 ms-1">
+                      parcourez
+                    </button>
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary w-100">
+                  Publier l'annonce
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,157 @@
+<div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <div class="row g-3 align-items-center">
+              <div class="col-12 col-md-4">
+                <h5 class="card-title mb-0">Messages</h5>
+              </div>
+              <div class="col-12 col-md-8">
+                <div class="d-flex gap-2">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white">
+                      <i class="bi bi-search"></i>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Rechercher une conversation..."
+                      [(ngModel)]="searchTerm"
+                    />
+                  </div>
+                  <select class="form-select w-auto" [(ngModel)]="filter">
+                    <option value="all">Tous</option>
+                    <option value="active">En cours</option>
+                    <option value="resolved">Résolus</option>
+                    <option value="archived">Archivés</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="list-group list-group-flush">
+            <div *ngIf="filteredConversations.length === 0" class="text-center py-5">
+              <i class="bi bi-chat-dots text-muted h1"></i>
+              <p class="text-muted mt-3">Aucune conversation trouvée</p>
+            </div>
+            
+            <a *ngFor="let conversation of filteredConversations"
+               [routerLink]="['/messages', conversation.id]"
+               class="list-group-item list-group-item-action p-3">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <img
+                    [src]="conversation.object.image || '/placeholder.svg'"
+                    [alt]="conversation.object.title"
+                    class="rounded"
+                    width="64"
+                    height="64"
+                  />
+                </div>
+                <div class="col">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <h6 class="mb-0">
+                      {{conversation.object.title}}
+                      <span *ngIf="!conversation.lastMessage.isRead" class="badge bg-primary ms-2">Nouveau</span>
+                    </h6>
+                    <small class="text-muted">{{conversation.lastMessage.timestamp}}</small>
+                  </div>
+                  <p class="text-muted small mb-1">
+                    <i class="bi bi-geo-alt me-1"></i>
+                    {{conversation.object.location}} - {{conversation.object.date}}
+                  </p>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="position-relative">
+                      <div class="bg-secondary bg-opacity-10 rounded-circle p-2">
+                        <i class="bi bi-person"></i>
+                      </div>
+                      <span *ngIf="conversation.contact.isOnline"
+                            class="position-absolute bottom-0 end-0 p-1 bg-success border border-white rounded-circle"
+                            style="width: 12px; height: 12px">
+                      </span>
+                    </div>
+                    <div class="flex-grow-1">
+                      <p class="mb-0">
+                        <span class="fw-medium">{{conversation.contact.name}}: </span>
+                        <span class="text-muted">{{conversation.lastMessage.content}}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <span [class]="'badge ' + getStatusBadgeClass(conversation.status)">
+                    {{getStatusLabel(conversation.status)}}
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+  
+        <!-- Statistiques des messages -->
+        <div class="row g-4 mt-4">
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="bg-primary bg-opacity-10 rounded p-3">
+                    <i class="bi bi-chat-dots text-primary h4 mb-0"></i>
+                  </div>
+                  <div class="ms-3">
+                    <h6 class="card-subtitle text-muted mb-1">Total conversations</h6>
+                    <h2 class="card-title mb-0">12</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="bg-success bg-opacity-10 rounded p-3">
+                    <i class="bi bi-check-circle text-success h4 mb-0"></i>
+                  </div>
+                  <div class="ms-3">
+                    <h6 class="card-subtitle text-muted mb-1">Objets restitués</h6>
+                    <h2 class="card-title mb-0">8</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="bg-warning bg-opacity-10 rounded p-3">
+                    <i class="bi bi-clock text-warning h4 mb-0"></i>
+                  </div>
+                  <div class="ms-3">
+                    <h6 class="card-subtitle text-muted mb-1">En attente</h6>
+                    <h2 class="card-title mb-0">3</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="bg-info bg-opacity-10 rounded p-3">
+                    <i class="bi bi-clock-history text-info h4 mb-0"></i>
+                  </div>
+                  <div class="ms-3">
+                    <h6 class="card-subtitle text-muted mb-1">Temps moyen réponse</h6>
+                    <h2 class="card-title mb-0">2h</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
