@@ -99,10 +99,10 @@ export class AuthService {
    */
   getCurrentUser() {
     return new Promise((resolve) => {
-      this.http.get('current-user')
-        .then((user: any) => {
-          this.setCurrentUser(user);
-          resolve(user);
+      this.http.get('auth/current-user')
+        .then((data: any) => {
+          this.setCurrentUser(data?.user);
+          resolve(data?.any);
         }).catch(() => {
           resolve(null);
         });
@@ -116,8 +116,8 @@ export class AuthService {
    * @param loginData
    * @returns Promise
    */
-  login(loginData: { email: string, password: string, device: string }) {
-    return this.http.post('login', loginData);
+  login(loginData: { email: string, password: string }) {
+    return this.http.post('auth/login', loginData);
   }
 
   /**
@@ -128,7 +128,7 @@ export class AuthService {
    * @returns Promise
    */
   logout() {
-    return this.http.post('logout', {});
+    return null;
   }
 
   /**

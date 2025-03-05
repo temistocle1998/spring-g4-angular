@@ -18,8 +18,6 @@ export class PageComponent implements OnInit {
     this.getAllCategories()
   }
 
-
-
   setSelectedItem(item: any) {
     this.selectedItem = item
     this.showItem = true

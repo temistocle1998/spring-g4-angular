@@ -5,28 +5,19 @@
                 <div class="card-body p-4">
                     <h4 class="card-title text-center mb-4">Connexion</h4>
 
-                    <form class="row g-3">
+                    <form class="row g-3" [formGroup]="loginForm">
                         <div class="col-12">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" placeholder="votre@email.com" />
+                            <input type="email" formControlName="email" class="form-control" placeholder="votre@email.com" />
                         </div>
 
                         <div class="col-12">
                             <label class="form-label">Mot de passe</label>
-                            <input type="password" class="form-control" placeholder="••••••••" />
+                            <input formControlName="password"type="password" class="form-control" placeholder="••••••••" />
                         </div>
 
                         <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe" />
-                                <label class="form-check-label" htmlFor="rememberMe">
-                                    Se souvenir de moi
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary w-100">
+                            <button (click)="login()" type="submit" class="btn btn-primary w-100">
                                 Se connecter
                             </button>
                         </div>

@@ -12,6 +12,7 @@ import { NavbarLoggedComponent } from './protected/navbar-logged/navbar-logged.c
 import { DashboardComponent } from './protected/dashboard/dashboard.component';
 import { DiscussionComponent } from './protected/messages/discussion/discussion.component';
 import { MessagesComponent } from './protected/messages/messages.component';
+import { AnnouncementComponent } from './protected/announcement/announcement.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,9 @@ const routes: Routes = [
       },
       {
         path: 'messages', component: MessagesComponent
+      },
+      {
+        path: 'anouncements', component: AnnouncementComponent
       },
       {
         path: 'messages/:id', component: DiscussionComponent

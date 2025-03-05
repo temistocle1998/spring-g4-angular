@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,14 +12,17 @@ import { LoginComponent } from './public/login/login.component';
 import { ProfileComponent } from './protected/profile/profile.component';
 import { ForgetPasswordComponent } from './public/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './public/reset-password/reset-password.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardAdminComponent } from './protected/dashboard-admin/dashboard-admin.component';
 import { DashboardComponent } from './protected/dashboard/dashboard.component';
 import { NavbarLoggedComponent } from './protected/navbar-logged/navbar-logged.component';
 import { CommonModule } from '@angular/common';
 import { DiscussionComponent } from './protected/messages/discussion/discussion.component';
 import { MessagesComponent } from './protected/messages/messages.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthService } from './shared/services/auth.service';
+import { HttpTokenInterceptorService } from './shared/services/http-token-interceptor.service';
+import { AnnouncementComponent } from './protected/announcement/announcement.component';
 
 @NgModule({
   declarations: [
@@ -37,16 +40,33 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     NavbarLoggedComponent,
     DiscussionComponent,
-    MessagesComponent
+    MessagesComponent,
+    AnnouncementComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     CommonModule,
     AppRoutingModule, 
-  HttpClientModule
+  HttpClientModule,
+  ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitFactory,
+      deps: [AuthService],
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function appInitFactory(authService: AuthService): () => Promise<any> {
+  return () => authService.getCurrentUser();
+}

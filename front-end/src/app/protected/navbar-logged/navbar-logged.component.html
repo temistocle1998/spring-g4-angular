@@ -6,19 +6,19 @@
 
         <div class="p-3">
             <div class="nav flex-column">
-                <a href="/dashboard" class="nav-link mb-2 active">
+                <a routerLink="/dashboard" class="nav-link mb-2 active">
                     <i class="bi bi-grid me-2"></i>
                     Tableau de bord
                 </a>
-                <a href="/dashboard/announcements" class="nav-link mb-2">
+                <a routerLink="/anouncements" class="nav-link mb-2">
                     <i class="bi bi-megaphone me-2"></i>
                     Mes annonces
                 </a>
-                <a href="/dashboard/messages" class="nav-link mb-2">
+                <a routerLink="/messages" class="nav-link mb-2">
                     <i class="bi bi-chat-dots me-2"></i>
                     Messages
                 </a>
-                <a href="/profile" class="nav-link mb-2">
+                <a routerLink="/profile" class="nav-link mb-2">
                     <i class="bi bi-person me-2"></i>
                     Profil
                 </a>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="mt-auto p-3 border-top">
-            <a href="/auth/logout" class="nav-link text-danger">
+            <a (click)="logout()" class="nav-link text-danger" style="cursor: pointer;">
                 <i class="bi bi-box-arrow-right me-2"></i>
                 Déconnexion
             </a>
@@ -78,23 +78,18 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <h6 class="dropdown-header">Jean Dupont</h6>
+                                <h6 class="dropdown-header">{{currentUser.first_name}} {{currentUser.last_name}}</h6>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/profile">
+                                <a class="dropdown-item" routerLink="/profile">
                                     Mon profil
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="/settings">
-                                    Paramètres
                                 </a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider" />
                             </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="/auth/logout">
+                            <li style="cursor: pointer;">
+                                <a class="dropdown-item text-danger " (click)="logout()">
                                     Déconnexion
                                 </a>
                             </li>

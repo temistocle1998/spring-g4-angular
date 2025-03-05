@@ -6,15 +6,15 @@
             <h4 class="card-title mb-0">Publier une annonce</h4>
           </div>
           <div class="card-body">
-            <form class="row g-4">
+            <form class="row g-4" [formGroup]="itemStoreForm">
               <div class="col-12">
                 <label class="form-label">Titre de l'annonce</label>
-                <input type="text" class="form-control" placeholder="Ex: Clés trouvées près de la gare" />
+                <input type="text" formControlName="title" name="title" class="form-control" placeholder="Ex: Clés trouvées près de la gare" />
               </div>
 
               <div class="col-12">
                 <label class="form-label">Catégorie</label>
-                <select class="form-select">
+                <select class="form-select" formControlName="category" name="category">
                   <option value="">Sélectionner une catégorie</option>
                   <option value="keys">Clés</option>
                   <option value="electronics">Électronique</option>
@@ -30,13 +30,24 @@
                   <span class="input-group-text">
                     <i class="bi bi-geo-alt"></i>
                   </span>
-                  <input type="text" class="form-control" placeholder="Adresse ou lieu" />
+                  <input formControlName="location" name="location" type="text" class="form-control" placeholder="Adresse ou lieu" />
                 </div>
               </div>
 
               <div class="col-12">
+                <label class="form-label">Date</label>
+                <input type="date" formControlName="date"
+                name="date"
+                  class="form-control"
+                  rows={4}
+                  placeholder="Décrivez l'objet trouvé (couleur, marque, état...)"
+                >
+              </div>
+
+              <div class="col-12">
                 <label class="form-label">Description</label>
-                <textarea
+                <textarea formControlName="description"
+                name="description"
                   class="form-control"
                   rows={4}
                   placeholder="Décrivez l'objet trouvé (couleur, marque, état...)"
@@ -57,7 +68,7 @@
               </div>
 
               <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100">
+                <button type="submit" (click)="save()" class="btn btn-primary w-100">
                   Publier l'annonce
                 </button>
               </div>
